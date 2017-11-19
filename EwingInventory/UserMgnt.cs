@@ -895,7 +895,8 @@ namespace EwingInventory
                 dgvReqMg.Columns[0].Width = 20;
                 userDetails();
                 attDetails();
-            }else if(tab_user.SelectedIndex == 3) //Salary Page
+            }
+            else if(tab_user.SelectedIndex == 3) //Salary Page
             {
                 //Set Salary dtps to current month first and last
                 DateTime now = DateTime.Now;
@@ -905,6 +906,8 @@ namespace EwingInventory
 
                 dtp_Salaryfrom.Value = stDate;
                 //dtp_SalaryTo.Value = endDate;
+
+                home.fillCombo(cmbSalMonth, "SELECT month FROM salary GROUP BY month ORDER BY month DESC;","month");
             }
         }
                 
@@ -1208,90 +1211,100 @@ namespace EwingInventory
 
         private void btnCalcSal_Click(object sender, EventArgs e)
         {
-            int rows = dgvStaffatt.RowCount;
-            
-            for(int i=0; i<rows; i++)
+            DialogResult res = MessageBox.Show("Do you want to apply Salary?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            if (res == DialogResult.Yes)
             {
-                string sid = dgvStaffatt.Rows[i].Cells[0].Value.ToString();
-                string days = dgvStaffatt.Rows[i].Cells[2].Value.ToString();
-                string othts = dgvStaffatt.Rows[i].Cells[3].Value.ToString();
-                string otrate = null;
-                string bsal = null;
+                int rows = dgvStaffatt.RowCount;
 
-                //get user details
-                MySqlCommand cmd = new MySqlCommand("SELECT s.sId 'sid',d.bSal 'bSal',d.otRate 'otRate' FROM staff s, designation d WHERE s.desig = d.id AND s.sId = "+sid+";", conn);
-                MySqlDataReader dr = null;
-
-                try
+                for (int i = 0; i < rows; i++)
                 {
-                    conn.Open();
-                    dr = cmd.ExecuteReader();
+                    string sid = dgvStaffatt.Rows[i].Cells[0].Value.ToString();
+                    string days = dgvStaffatt.Rows[i].Cells[2].Value.ToString();
+                    string othts = dgvStaffatt.Rows[i].Cells[3].Value.ToString();
+                    string otrate = null;
+                    string bsal = null;
 
-                    while (dr.Read())
+                    //get user details
+                    MySqlCommand cmd = new MySqlCommand("SELECT s.sId 'sid',d.bSal 'bSal',d.otRate 'otRate' FROM staff s, designation d WHERE s.desig = d.id AND s.sId = " + sid + ";", conn);
+                    MySqlDataReader dr = null;
+
+                    try
                     {
-                        bsal = dr[1].ToString();
-                        otrate = dr[2].ToString();
+                        conn.Open();
+                        dr = cmd.ExecuteReader();
+
+                        while (dr.Read())
+                        {
+                            bsal = dr[1].ToString();
+                            otrate = dr[2].ToString();
+                        }
+
                     }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    //End of User Details
 
-                }catch(Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
+                    //if already calculated
+
+
+                    //Calculate Salary
+                    double otAmt = (Convert.ToDouble(othts) * Convert.ToDouble(otrate));
+
+                    MySqlCommand cmd2 = new MySqlCommand("INSERT INTO salary(sId,month,bSal,incentive,epf,etf,gross)" +
+                        "VALUES(@sid,@month,@bsal,@incen,@epf,@etf,@gross)", conn);
+
+                    cmd2.Parameters.Add("@sid", MySqlDbType.Int32).Value = Convert.ToInt32(sid);
+                    cmd2.Parameters.Add("@month", MySqlDbType.VarChar).Value = dtp_Salaryfrom.Value.ToString("yyyy-MM");
+                    cmd2.Parameters.Add("@bsal", MySqlDbType.Double).Value = Convert.ToDouble(bsal);
+                    cmd2.Parameters.Add("@incen", MySqlDbType.Double).Value = Convert.ToDouble(otAmt);
+                    cmd2.Parameters.Add("@epf", MySqlDbType.Double).Value = (Convert.ToDouble(bsal) * 0.12);
+                    cmd2.Parameters.Add("@etf", MySqlDbType.Double).Value = (Convert.ToDouble(bsal) * 0.08);
+                    cmd2.Parameters.Add("@gross", MySqlDbType.Double).Value = (Convert.ToDouble(bsal) + Convert.ToDouble(otAmt) - (Convert.ToDouble(bsal) * 0.12) - (Convert.ToDouble(bsal) * 0.08));
+
+
+                    //MessageBox.Show(sid + " " + days + " " + othts + " " + bsal + " " + otrate + " " +otAmt);
+
+                    try
+                    {
+                        conn.Open();
+                        cmd2.ExecuteNonQuery();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                    //End of calculate salary
                 }
-                finally
-                {
-                    conn.Close();
-                }
-                //End of User Details
 
-                //if already calculated
+                MessageBox.Show("Salary Details applied successfully!");
 
+                //Load Salary Table
+                string month = dtp_Salaryfrom.Value.ToString("yyyy-MM");
+                //home.LoadToDatagridview(dgvStaffSal, "SELECT sId, month,bSal,incentive,epf,etf,gross FROM salary WHERE month ="+month+";");
 
-                //Calculate Salary
-                double otAmt = (Convert.ToDouble(othts) * Convert.ToDouble(otrate));
-
-                MySqlCommand cmd2 = new MySqlCommand("INSERT INTO salary(sId,month,bSal,incentive,epf,etf,gross)"+
-                    "VALUES(@sid,@month,@bsal,@incen,@epf,@etf,@gross)",conn);
-
-                cmd2.Parameters.Add("@sid", MySqlDbType.Int32).Value = Convert.ToInt32(sid);
-                cmd2.Parameters.Add("@month", MySqlDbType.VarChar).Value = dtp_Salaryfrom.Value.ToString("yyyy-MM");
-                cmd2.Parameters.Add("@bsal", MySqlDbType.Double).Value = Convert.ToDouble(bsal);
-                cmd2.Parameters.Add("@incen", MySqlDbType.Double).Value = Convert.ToDouble(otAmt);
-                cmd2.Parameters.Add("@epf", MySqlDbType.Double).Value = (Convert.ToDouble(bsal) * 0.12);
-                cmd2.Parameters.Add("@etf", MySqlDbType.Double).Value = (Convert.ToDouble(bsal) * 0.08);
-                cmd2.Parameters.Add("@gross", MySqlDbType.Double).Value = (Convert.ToDouble(bsal)+ Convert.ToDouble(otAmt)- (Convert.ToDouble(bsal) * 0.12)- (Convert.ToDouble(bsal) * 0.08));
-
-
-                //MessageBox.Show(sid + " " + days + " " + othts + " " + bsal + " " + otrate + " " +otAmt);
-
-                try
-                {
-                    conn.Open();
-                    cmd2.ExecuteNonQuery();
-
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-                finally
-                {
-                    conn.Close();
-                }
-                //End of calculate salary
+                //Load SalarySlip
+                ReportForms.rptfrmPayslip frm = new ReportForms.rptfrmPayslip(month);
+                frm.Show();
             }
-
-            //Load Salary Table
-            string month = dtp_Salaryfrom.Value.ToString("yyyy-MM");
-            home.LoadToDatagridview(dgvStaffSal, "SELECT sId, month,bSal,incentive,epf,etf,gross FROM salary WHERE month ="+month+";");
-
-            //Load SalarySlip
-            ReportForms.rptfrmPayslip frm = new ReportForms.rptfrmPayslip(month);
-            frm.Show();
         }
+
+            
 
         private void button7_Click(object sender, EventArgs e)
         {
-            string month = DateTime.Now.AddMonths(-1).ToString("yyyy-MM");
+            string month = cmbSalMonth.SelectedItem.ToString();
             home.LoadToDatagridview(dgvStaffSal, "SELECT sId, month,bSal,incentive,epf,etf,gross FROM salary WHERE month ='"+month+"';");
         }
 
@@ -1361,6 +1374,13 @@ namespace EwingInventory
         {
             ReportForms.rptfrm_Requests req = new ReportForms.rptfrm_Requests(cbPending.Checked,cbAppr.Checked,cbRej.Checked,cbHd.Checked,cbHd.Checked,cbDoff.Checked,cbSalAdv.Checked);
             req.Show();
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            string month = cmbSalMonth.SelectedItem.ToString();
+            ReportForms.rptfrmPayslip frm = new ReportForms.rptfrmPayslip(month);
+            frm.Show();
         }
     }
 }

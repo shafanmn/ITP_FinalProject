@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvStaff = new System.Windows.Forms.DataGridView();
             this.button1 = new System.Windows.Forms.Button();
             this.txt_serach = new System.Windows.Forms.TextBox();
@@ -162,10 +162,14 @@
             this.btnCalcSal = new System.Windows.Forms.Button();
             this.dgvStaffatt = new System.Windows.Forms.DataGridView();
             this.button6 = new System.Windows.Forms.Button();
-            this.label21 = new System.Windows.Forms.Label();
             this.dtp_SalaryTo = new System.Windows.Forms.DateTimePicker();
             this.label12 = new System.Windows.Forms.Label();
             this.dtp_Salaryfrom = new System.Windows.Forms.DateTimePicker();
+            this.groupBox11 = new System.Windows.Forms.GroupBox();
+            this.button10 = new System.Windows.Forms.Button();
+            this.cmbSalMonth = new System.Windows.Forms.ComboBox();
+            this.label21 = new System.Windows.Forms.Label();
+            this.label25 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaff)).BeginInit();
             this.tab_user.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -191,6 +195,7 @@
             this.btn_calSal.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaffSal)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaffatt)).BeginInit();
+            this.groupBox11.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvStaff
@@ -904,14 +909,14 @@
             this.dgvRequest.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvRequest.BackgroundColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.dgvRequest.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Lime;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgvRequest.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.Lime;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Cambria", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvRequest.DefaultCellStyle = dataGridViewCellStyle2;
             this.dgvRequest.Location = new System.Drawing.Point(6, 18);
             this.dgvRequest.Name = "dgvRequest";
             this.dgvRequest.ReadOnly = true;
@@ -1742,6 +1747,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.groupBox11);
             this.tabPage4.Controls.Add(this.btn_calSal);
             this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
@@ -1753,8 +1759,6 @@
             // 
             // btn_calSal
             // 
-            this.btn_calSal.Controls.Add(this.button7);
-            this.btn_calSal.Controls.Add(this.dgvStaffSal);
             this.btn_calSal.Controls.Add(this.btnCalcSal);
             this.btn_calSal.Controls.Add(this.dgvStaffatt);
             this.btn_calSal.Controls.Add(this.button6);
@@ -1764,21 +1768,21 @@
             this.btn_calSal.Controls.Add(this.dtp_Salaryfrom);
             this.btn_calSal.Location = new System.Drawing.Point(0, 0);
             this.btn_calSal.Name = "btn_calSal";
-            this.btn_calSal.Size = new System.Drawing.Size(790, 431);
+            this.btn_calSal.Size = new System.Drawing.Size(375, 431);
             this.btn_calSal.TabIndex = 0;
             this.btn_calSal.TabStop = false;
-            this.btn_calSal.Text = "Salary";
+            this.btn_calSal.Text = "Current";
             // 
             // button7
             // 
             this.button7.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button7.Font = new System.Drawing.Font("Cambria", 10F);
             this.button7.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.button7.Location = new System.Drawing.Point(404, 25);
+            this.button7.Location = new System.Drawing.Point(235, 26);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(117, 36);
+            this.button7.Size = new System.Drawing.Size(74, 30);
             this.button7.TabIndex = 59;
-            this.button7.Text = "Previous Salary";
+            this.button7.Text = "Show";
             this.button7.UseVisualStyleBackColor = false;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
@@ -1793,14 +1797,14 @@
             this.dgvStaffSal.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvStaffSal.Cursor = System.Windows.Forms.Cursors.Hand;
             this.dgvStaffSal.GridColor = System.Drawing.SystemColors.ActiveCaption;
-            this.dgvStaffSal.Location = new System.Drawing.Point(402, 64);
+            this.dgvStaffSal.Location = new System.Drawing.Point(6, 66);
             this.dgvStaffSal.MultiSelect = false;
             this.dgvStaffSal.Name = "dgvStaffSal";
             this.dgvStaffSal.ReadOnly = true;
             this.dgvStaffSal.RowHeadersVisible = false;
             this.dgvStaffSal.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvStaffSal.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStaffSal.Size = new System.Drawing.Size(382, 354);
+            this.dgvStaffSal.Size = new System.Drawing.Size(395, 354);
             this.dgvStaffSal.TabIndex = 58;
             // 
             // btnCalcSal
@@ -1809,7 +1813,7 @@
             this.btnCalcSal.Enabled = false;
             this.btnCalcSal.Font = new System.Drawing.Font("Cambria", 10F);
             this.btnCalcSal.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.btnCalcSal.Location = new System.Drawing.Point(667, 24);
+            this.btnCalcSal.Location = new System.Drawing.Point(254, 374);
             this.btnCalcSal.Name = "btnCalcSal";
             this.btnCalcSal.Size = new System.Drawing.Size(117, 36);
             this.btnCalcSal.TabIndex = 57;
@@ -1835,7 +1839,7 @@
             this.dgvStaffatt.RowHeadersVisible = false;
             this.dgvStaffatt.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.dgvStaffatt.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvStaffatt.Size = new System.Drawing.Size(390, 354);
+            this.dgvStaffatt.Size = new System.Drawing.Size(365, 304);
             this.dgvStaffatt.TabIndex = 56;
             // 
             // button6
@@ -1843,23 +1847,13 @@
             this.button6.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.button6.Font = new System.Drawing.Font("Cambria", 8.5F);
             this.button6.ForeColor = System.Drawing.SystemColors.HotTrack;
-            this.button6.Location = new System.Drawing.Point(309, 25);
+            this.button6.Location = new System.Drawing.Point(282, 26);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(89, 36);
             this.button6.TabIndex = 55;
             this.button6.Text = "Show Attendance";
             this.button6.UseVisualStyleBackColor = false;
             this.button6.Click += new System.EventHandler(this.button6_Click);
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Cambria", 10F);
-            this.label21.Location = new System.Drawing.Point(156, 32);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(22, 16);
-            this.label21.TabIndex = 54;
-            this.label21.Text = "To";
             // 
             // dtp_SalaryTo
             // 
@@ -1889,6 +1883,61 @@
             this.dtp_Salaryfrom.Size = new System.Drawing.Size(88, 23);
             this.dtp_Salaryfrom.TabIndex = 0;
             this.dtp_Salaryfrom.ValueChanged += new System.EventHandler(this.dtp_Salaryfrom_ValueChanged);
+            // 
+            // groupBox11
+            // 
+            this.groupBox11.Controls.Add(this.label25);
+            this.groupBox11.Controls.Add(this.cmbSalMonth);
+            this.groupBox11.Controls.Add(this.button10);
+            this.groupBox11.Controls.Add(this.button7);
+            this.groupBox11.Controls.Add(this.dgvStaffSal);
+            this.groupBox11.Location = new System.Drawing.Point(380, 1);
+            this.groupBox11.Name = "groupBox11";
+            this.groupBox11.Size = new System.Drawing.Size(407, 430);
+            this.groupBox11.TabIndex = 60;
+            this.groupBox11.TabStop = false;
+            this.groupBox11.Text = "Previous";
+            // 
+            // button10
+            // 
+            this.button10.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.button10.Font = new System.Drawing.Font("Cambria", 10F);
+            this.button10.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.button10.Location = new System.Drawing.Point(327, 26);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(74, 30);
+            this.button10.TabIndex = 60;
+            this.button10.Text = "Print";
+            this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
+            // 
+            // cmbSalMonth
+            // 
+            this.cmbSalMonth.FormattingEnabled = true;
+            this.cmbSalMonth.Location = new System.Drawing.Point(59, 31);
+            this.cmbSalMonth.Name = "cmbSalMonth";
+            this.cmbSalMonth.Size = new System.Drawing.Size(170, 23);
+            this.cmbSalMonth.TabIndex = 61;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Font = new System.Drawing.Font("Cambria", 10F);
+            this.label21.Location = new System.Drawing.Point(156, 32);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(22, 16);
+            this.label21.TabIndex = 54;
+            this.label21.Text = "To";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Font = new System.Drawing.Font("Cambria", 10F);
+            this.label25.Location = new System.Drawing.Point(6, 34);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(47, 16);
+            this.label25.TabIndex = 58;
+            this.label25.Text = "Month";
             // 
             // frm_users
             // 
@@ -1939,6 +1988,8 @@
             this.btn_calSal.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaffSal)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgvStaffatt)).EndInit();
+            this.groupBox11.ResumeLayout(false);
+            this.groupBox11.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -2061,7 +2112,6 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.GroupBox btn_calSal;
-        private System.Windows.Forms.Label label21;
         private System.Windows.Forms.DateTimePicker dtp_SalaryTo;
         private System.Windows.Forms.Label label12;
         private System.Windows.Forms.DateTimePicker dtp_Salaryfrom;
@@ -2082,5 +2132,10 @@
         private System.Windows.Forms.CheckBox cbSalAdv;
         private System.Windows.Forms.CheckBox cbLoan;
         private System.Windows.Forms.CheckBox cbAll2;
+        private System.Windows.Forms.GroupBox groupBox11;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.ComboBox cmbSalMonth;
+        private System.Windows.Forms.Label label21;
     }
 }

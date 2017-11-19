@@ -41,6 +41,8 @@ namespace EwingInventory
 
         public void fillCombo(ComboBox c, string q, string field)
         {
+            c.Items.Clear();
+
             MySqlConnection conn = new MySqlConnection(connString);
             MySqlCommand cmd = new MySqlCommand(q, conn);
 
